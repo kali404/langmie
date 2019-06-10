@@ -48,10 +48,9 @@ INSTALLED_APPS = [
     'operation.apps.OperationConfig', # 用户操作应用
     'organization.apps.OrganizationConfig', # 学校管理应用
     'users.apps.UsersConfig', # 用户应用
-<<<<<<< HEAD
+
     'index.apps.IndexConfig', # 首页
-=======
->>>>>>> master
+
 ]
 
 MIDDLEWARE = [
@@ -139,7 +138,6 @@ MEDIA_ROOT=os.path.join(BASE_DIR,'static/media')
 
 # UserProfile 覆盖了 django 内置的 user 表
 AUTH_USER_MODEL = 'users.UserProfile'
-<<<<<<< HEAD
 
 # 邮箱
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' # 指定邮件后端
@@ -149,5 +147,3 @@ EMAIL_HOST_USER = 'hmmeiduo@163.com' # 授权的邮箱
 EMAIL_HOST_PASSWORD = 'hmmeiduo123' # 邮箱授权时获得的密码，非注册登录密码
 EMAIL_FROM = '博学谷<hmmeiduo@163.com>' # 发件人抬头
 EMAIL_ACTIVE_URL = 'http://127.0.0.1:8000/reset/?active_code='
-=======
->>>>>>> master
