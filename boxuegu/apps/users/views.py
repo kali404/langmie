@@ -44,3 +44,29 @@ class RegisterView(View):
 
         return render(request, 'register.html', {'register_form': register_form})
 
+
+class LogIn(View):
+    def get(self, request):
+        return render(request, 'login.html')
+
+    def post(self, request):
+        data = request.POST
+        login_form = LoginForm(data)
+        res = login_form.is_valid()
+        if res:
+            name = login_form.cleaned_data.get('username')
+            pwd = login_form.cleaned_data.get('password')
+            user = authenticate(request, username=name, password=pwd)
+            if user is None:
+                return render(request, 'login.html', {'form_errors': login_form})
+
+            login(request, user)
+            return redirect("/")
+        return render(request, 'login.html', {'form_errors': login_form})
+
+
+class LogOut(View):
+    def get(self, request):
+        logout(request)
+        return redirect('/')
+
