@@ -175,3 +175,56 @@ class UploadImageView(LoginRequiredMixin, View):
             "status": "success",
             "msg": '头像修改失败'
         })
+
+class MyCourseView(LoginRequiredMixin, View):
+    def get(self, request):
+        user_courses = UserCourse.objects.filter(user=request.user)
+        return render(request, 'usercenter-mycourse.html', {
+            'user_courses': user_courses,
+            'MEDIA_URL': settings.MEDIA_URL
+        })
+
+
+class MyFavOrgView(LoginRequiredMixin, View):
+    def get(self, request):
+        user = request.user
+        data = UserFavorite.objects.filter(fav_type=2, user=user.id, )
+        org_list = [CourseOrg.objects.get(id=i.fav_id) for i in data]
+        return render(request, 'usercenter-fav-org.html', {
+            'org_list': org_list,
+            'MEDIA_URL': settings.MEDIA_URL
+        })
+
+
+class MyFavTeacherView(LoginRequiredMixin, View):
+    def get(self, request):
+        user = request.user
+        data = UserFavorite.objects.filter(fav_type=3, user=user.id, )
+        teacher_list = [Teacher.objects.get(id=i.fav_id) for i in data]
+        return render(request, 'usercenter-fav-teacher.html', {
+            'teacher_list': teacher_list,
+            'MEDIA_URL': settings.MEDIA_URL
+        })
+
+class MyFavCourseView(LoginRequiredMixin,View):
+    def get(self,request):
+        user = request.user
+        data = UserFavorite.objects.filter(fav_type=1, user=user.id, )
+        course_id = [Course.objects.get(id=i.fav_id) for i in data]
+        return render(request, 'usercenter-fav-course.html', {
+            'course_list': course_id,
+            'MEDIA_URL': settings.MEDIA_URL
+        })
+class MyMessageView(LoginRequiredMixin,View):
+    def get(self,request):
+        messages = UserMessage.objects.filter(user=request.user.id)
+        paginator = Paginator(messages, 1)
+        page_mun = request.GET.get('page',1)
+        messages = paginator.page(page_mun)
+
+
+        return render(request, 'usercenter-message.html', {
+            'messages': messages,
+        })
+class Gut(View):
+    pass
