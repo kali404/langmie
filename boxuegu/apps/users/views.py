@@ -70,3 +70,80 @@ class LogOut(View):
         logout(request)
         return redirect('/')
 
+
+class ForGet(View):
+    def get(self, request):
+        forget_form = ForgetForm()
+        return render(request, 'forgetpwd.html', {'forget_form': forget_form})
+
+    def post(self, request):
+        data = request.POST
+        code = data.get('captcha_1')
+        send_type = 'forget'
+        forgetform = ForgetForm(data)
+        res = forgetform.is_valid()
+        if res:
+            email = forgetform.cleaned_data.get('email')
+            try:
+                user = UserProfile.objects.get(email=email)
+            except:
+                return render(request, 'forgetpwd.html', {'msg': '该邮箱没注册'})
+            # 加密
+            try:
+                EmailVerifyRecord.objects.create(code=code,email=email,send_type=send_type)
+            except:
+                return render(request, 'forgetpwd.html', {'msg': '存入验证信息出错'})
+
+            token = dumps({'email': email,'code':code,'send_type':send_type}, 60 * 60 * 10)
+            urls = settings.EMAIL_ACTIVE_URL + token
+            send_user_mali.delay(email, urls)
+            return render(request, 'send_success.html')
+        return render(request, 'forgetpwd.html', {'forget_form': forgetform})
+
+
+class ResetView(View):
+    def get(self, request):
+        active_code = request.GET.get('active_code')
+        if active_code is None:
+            render(request, 'forgetpwd.html', {'msg': '接收参数错误!'})
+        data = loads(active_code, 60 * 60 * 10)
+        if data is None:
+            return render(request, 'forgetpwd.html', {'msg': '解析失败!'})
+        email = data.get('email')
+        code = data.get('code')
+        send_type = data.get('send_type')
+
+        try:
+            user = EmailVerifyRecord.objects.get(email=email)
+        except:
+            return render(request, 'forgetpwd.html',{'msg': '错误!'})
+
+        if not code == user.code:
+            return render(request, 'forgetpwd.html', {'msg': '参数有误!'})
+        if not send_type == user.send_type:
+            return render(request, 'forgetpwd.html', {'msg': '参数有误!'})
+        if not code == user.email:
+            return render(request, 'forgetpwd.html', {'msg': '参数有误!'})
+
+        return render(request, 'password_reset.html', {'email': email})
+
+    def post(self, request):
+        data = request.POST
+        modifypwdform = ModifyPwdForm(data)
+        res = modifypwdform.is_valid()
+
+        if res:
+            email = modifypwdform.cleaned_data.get('email')
+            pwd = modifypwdform.cleaned_data.get('password1')
+            print(email)
+            try:
+                user = UserProfile.objects.get(email=email)
+            except:
+                return render(request, 'password_reset.html', {'modify_form': {'errors': '查无此用户'}})
+            user.set_password(pwd)
+            user.save()
+            return redirect('/')
+        return render(request, 'password_reset.html', {'modify_form': {'errors': '参数错误'}})
+
+
+
