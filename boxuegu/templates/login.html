@@ -17,13 +17,8 @@
       <p class="fl hd-tips">博学谷在线网，在线学习平台！</p>
       <ul class="fr hd-bar">
         <li>服务电话：<span>010-56288220</span></li>
-<<<<<<< HEAD
         <li class="active"><a href="{% url 'users:login' %}">[登录]</a></li>
         <li><a href="{% url 'users:register' %}">[注册]</a></li>
-=======
-        <li class="active"><a href="{% url 'login' %}">[登录]</a></li>
-        <li><a href="{% url 'register' %}">[注册]</a></li>
->>>>>>> master
       </ul>
     </div>
   </div>
@@ -49,11 +44,7 @@
       </div>
       <div class="fl form-box">
         <h2>帐号登录</h2>
-<<<<<<< HEAD
         <form action="{% url 'users:login' %}" method="post" autocomplete="off">
-=======
-        <form action="{% url 'login' %}" method="post" autocomplete="off">
->>>>>>> master
           <div class="form-group marb20 {% if form_errors.username %} errorput {% endif %}">
             <input name="username" id="username" type="text" placeholder="手机号/邮箱"/>
           </div>
@@ -67,20 +58,12 @@
             {% if not form_errors %} {{ msg }} {% endif %}
           </div>
           <div class="auto-box marb38">
-<<<<<<< HEAD
             <a class="fr" href="{% url 'users:forget_pwd' %}">忘记密码？</a>
-=======
-            <a class="fr" href="{% url 'forget_pwd' %}">忘记密码？</a>
->>>>>>> master
           </div>
           <input class="btn btn-green" id="jsLoginBtn" type="submit" value="立即登录 "/>
         {% csrf_token %}
         </form>
-<<<<<<< HEAD
         <p class="form-p">没有博学谷在线网帐号？<a href="{% url 'users:register' %}">[立即注册]</a></p>
-=======
-        <p class="form-p">没有博学谷在线网帐号？<a href="{% url 'register' %}">[立即注册]</a></p>
->>>>>>> master
       </div>
     </div>
   </div>

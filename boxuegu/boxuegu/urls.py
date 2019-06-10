@@ -20,12 +20,12 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', xadmin.site.urls),
     url(r'^captcha/', include('captcha.urls')),  # 这是生成验证码的图片
-<<<<<<< HEAD
+
     url('^', include('index.urls')),
     url('^', include('users.urls',namespace='users')),
     url('^', include('organization.urls',namespace='org')),
     url('^', include('courses.urls',namespace='courses')),
-=======
+
     url('^', include('user_test.urls')),
->>>>>>> master
+
 ]

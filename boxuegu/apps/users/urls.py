@@ -1,5 +1,5 @@
 from django.conf.urls import url, include
-<<<<<<< HEAD
+
 from .views import *
 urlpatterns = [
     url(r'^register/$', RegisterView.as_view(), name='register'),
@@ -27,9 +27,4 @@ urlpatterns = [
     url(r'^image$', UploadImageView.as_view(), name='modify_pwd'),
     # url(r'^image$', UploadImageView.as_view(), name='myfav_course'),
     # url(r'^image$', UploadImageView.as_view(), name='myfav_org'),
-=======
-
-urlpatterns = [
-
->>>>>>> master
 ]

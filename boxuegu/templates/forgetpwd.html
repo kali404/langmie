@@ -16,13 +16,8 @@
       <p class="fl hd-tips">博学谷网，在线学习平台！</p>
       <ul class="fr hd-bar">
         <li>服务电话：<span>33333333</span></li>
-<<<<<<< HEAD
         <li><a href="{% url 'users:login' %}">[登录]</a></li>
         <li class="active"><a href="{% url 'users:forget_pwd' %}">[忘记密码]</a></li>
-=======
-        <li><a href="{% url 'login' %}">[登录]</a></li>
-        <li class="active"><a href="{% url 'forget_pwd' %}">[忘记密码]</a></li>
->>>>>>> master
       </ul>
     </div>
   </div>
@@ -51,11 +46,7 @@
       </div>
       <div class="fl form-box">
         <h2>忘记密码</h2>
-<<<<<<< HEAD
         <form id="jsFindPwdForm" method="post" action="{% url 'users:forget_pwd' %}" autocomplete="off">
-=======
-        <form id="jsFindPwdForm" method="post" action="{% url 'forget_pwd' %}" autocomplete="off">
->>>>>>> master
           <div class="form-group marb20 {% if forget_form.errors.email %} errorput {% endif %} ">
             <input type="text" id="account" name="email"  placeholder="请输入注册邮箱"/>
           </div>
@@ -71,11 +62,7 @@
           </div>
           <input type="hidden" name="sms_type" value="1">
           <input class="btn btn-green" id="jsFindPwdBtn" type="submit" value="提交"/>
-<<<<<<< HEAD
           <p class="form-p" style="bottom:40px;">您还可以<a href="{% url 'users:login' %}"> [直接登录]</a></p>
-=======
-          <p class="form-p" style="bottom:40px;">您还可以<a href="{% url 'login' %}"> [直接登录]</a></p>
->>>>>>> master
           {% csrf_token %}
         </form>
       </div>

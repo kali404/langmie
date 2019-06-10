@@ -37,11 +37,9 @@ class ModifyPwdForm(forms.Form):
     """
     password1 = forms.CharField(required=True, min_length=5)
     password2 = forms.CharField(required=True, min_length=5)
-<<<<<<< HEAD
-    email = forms.EmailField(required=True)
-=======
 
->>>>>>> master
+    email = forms.EmailField(required=True)
+
 
 class UploadImageForm(forms.ModelForm):
     """

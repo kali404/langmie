@@ -1,5 +1,5 @@
 from django.conf.urls import url
-<<<<<<< HEAD
+
 from .views import *
 urlpatterns = [
 
@@ -16,9 +16,8 @@ urlpatterns = [
     url(r'^teacher_list$', Gut.as_view(), name="teacher_list"),
     url(r'^org_home$', Gut.as_view(), name="org_home"),
     url(r'^org_home$', Gut.as_view(), name="add_fav"),
-=======
 
-urlpatterns = [
 
->>>>>>> master
+
+
 ]

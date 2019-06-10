@@ -17,13 +17,8 @@
       <p class="fl hd-tips">博学谷在线，在线学习平台！</p>
       <ul class="fr hd-bar">
         <li>服务电话：<span>010-56288220</span></li>
-<<<<<<< HEAD
         <li><a href="{% url 'users:login' %}">[登录]</a></li>
         <li class="active"><a href="{% url 'users:register' %}">[注册]</a></li>
-=======
-        <li><a href="{% url 'login' %}">[登录]</a></li>
-        <li class="active"><a href="{% url 'register' %}">[注册]</a></li>
->>>>>>> master
       </ul>
     </div>
   </div>
@@ -57,11 +52,7 @@
         </div>
 
         <div class="tab-form">
-<<<<<<< HEAD
           <form id="email_register_form" method="post" action="{% url 'users:register' %}" autocomplete="off">
-=======
-          <form id="email_register_form" method="post" action="{% url 'register' %}" autocomplete="off">
->>>>>>> master
             <div class="form-group marb20 {% if register_form.errors.email %} errorput {% endif %} ">
               <input type="text" id="id_email" name="email"  placeholder="请输入您的邮箱地址"/>
             </div>
@@ -84,11 +75,7 @@
           {% csrf_token %}
           </form>
         </div>
-<<<<<<< HEAD
         <p class="form-p">已有账号？<a href="{% url 'users:login' %}">[立即登录]</a></p>
-=======
-        <p class="form-p">已有账号？<a href="{% url 'login' %}">[立即登录]</a></p>
->>>>>>> master
       </div>
     </div>
   </div>
