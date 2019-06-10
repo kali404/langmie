@@ -147,3 +147,31 @@ class ResetView(View):
 
 
 
+class UserInfo(LoginRequiredMixin, View):
+    def get(self, request):
+        return render(request, 'usercenter-info.html', {'MEDIA_URL': settings.MEDIA_URL})
+
+    def post(self, request):
+        data = request.POST
+        user_form = UserInfoForm(data, instance=request.user)
+        res = user_form.is_valid()
+        if res:
+            request.user.save()
+            return redirect('users/info/')
+        return render(request, 'usercenter-info.html', {'MEDIA_URL': settings.MEDIA_URL,
+                                                        'status': '修改失败'})
+
+
+class UploadImageView(LoginRequiredMixin, View):
+    def post(self, request):
+        data = request.POST
+        image_form = UploadImageForm(data, request.FILES, instance=request.user)
+        res = image_form.is_valid()
+
+        if res:
+            request.user.save()
+            return JsonResponse({"status": "success", "msg": "头像修改成功"})
+        return JsonResponse({
+            "status": "success",
+            "msg": '头像修改失败'
+        })
