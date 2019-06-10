@@ -90,11 +90,11 @@ class ForGet(View):
                 return render(request, 'forgetpwd.html', {'msg': '该邮箱没注册'})
             # 加密
             try:
-                EmailVerifyRecord.objects.create(code=code,email=email,send_type=send_type)
+                EmailVerifyRecord.objects.create(code=code, email=email, send_type=send_type)
             except:
                 return render(request, 'forgetpwd.html', {'msg': '存入验证信息出错'})
 
-            token = dumps({'email': email,'code':code,'send_type':send_type}, 60 * 60 * 10)
+            token = dumps({'email': email, 'code': code, 'send_type': send_type}, 60 * 60 * 10)
             urls = settings.EMAIL_ACTIVE_URL + token
             send_user_mali.delay(email, urls)
             return render(request, 'send_success.html')
@@ -110,20 +110,11 @@ class ResetView(View):
         if data is None:
             return render(request, 'forgetpwd.html', {'msg': '解析失败!'})
         email = data.get('email')
-        code = data.get('code')
-        send_type = data.get('send_type')
 
         try:
-            user = EmailVerifyRecord.objects.get(email=email)
+            user = UserProfile.objects.get(email=email)
         except:
-            return render(request, 'forgetpwd.html',{'msg': '错误!'})
-
-        if not code == user.code:
-            return render(request, 'forgetpwd.html', {'msg': '参数有误!'})
-        if not send_type == user.send_type:
-            return render(request, 'forgetpwd.html', {'msg': '参数有误!'})
-        if not code == user.email:
-            return render(request, 'forgetpwd.html', {'msg': '参数有误!'})
+            return render(request, 'forgetpwd.html', {'msg': '未知错误!'})
 
         return render(request, 'password_reset.html', {'email': email})
 
@@ -144,7 +135,6 @@ class ResetView(View):
             user.save()
             return redirect('/')
         return render(request, 'password_reset.html', {'modify_form': {'errors': '参数错误'}})
-
 
 
 class UserInfo(LoginRequiredMixin, View):
@@ -176,6 +166,7 @@ class UploadImageView(LoginRequiredMixin, View):
             "msg": '头像修改失败'
         })
 
+
 class MyCourseView(LoginRequiredMixin, View):
     def get(self, request):
         user_courses = UserCourse.objects.filter(user=request.user)
@@ -206,8 +197,9 @@ class MyFavTeacherView(LoginRequiredMixin, View):
             'MEDIA_URL': settings.MEDIA_URL
         })
 
-class MyFavCourseView(LoginRequiredMixin,View):
-    def get(self,request):
+
+class MyFavCourseView(LoginRequiredMixin, View):
+    def get(self, request):
         user = request.user
         data = UserFavorite.objects.filter(fav_type=1, user=user.id, )
         course_id = [Course.objects.get(id=i.fav_id) for i in data]
@@ -215,16 +207,19 @@ class MyFavCourseView(LoginRequiredMixin,View):
             'course_list': course_id,
             'MEDIA_URL': settings.MEDIA_URL
         })
-class MyMessageView(LoginRequiredMixin,View):
-    def get(self,request):
+
+
+class MyMessageView(LoginRequiredMixin, View):
+    def get(self, request):
         messages = UserMessage.objects.filter(user=request.user.id)
         paginator = Paginator(messages, 1)
-        page_mun = request.GET.get('page',1)
+        page_mun = request.GET.get('page', 1)
         messages = paginator.page(page_mun)
-
 
         return render(request, 'usercenter-message.html', {
             'messages': messages,
         })
+
+
 class Gut(View):
     pass
